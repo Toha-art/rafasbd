@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Birthday Journey</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+
+
+  <style>
+    * {
+      cursor: url('https://cur.cursors-4u.net/cursors/cur-13/cur1160.cur'), auto !important;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #0c0420, #5d3c64, #7b466a, #9f6496, #d391b0, #ba6e8f);
+      background-size: cover;
+      background-attachment: fixed;
+      color: #EED6E7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      animation: fadeIn 2s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; background-color: black; }
+      to { opacity: 1; }
+    }
+
+    .section {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      max-width: 800px;
+      padding: 20px;
+      box-sizing: border-box;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      animation: bounceIn 0.6s ease;
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0.9); opacity: 0; }
+      60% { transform: scale(1.05); opacity: 0.7; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .title {
+      font-family: 'Pacifico', cursive;
+      font-size: 2.5rem;
+      color: #EED6E7;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .countdown {
+      font-size: 3rem;
+  font-weight: 900;
+  margin-bottom: 15px;
+  color: #e1bee7;
+  text-shadow:
+    2px 2px 0 #7b1fa2,
+    4px 4px 0 #4a148c,
+    6px 6px 8px rgba(0, 0, 0, 0.5);
+}
+
+
+    #password-input {
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1px solid #C06993;
+      margin-bottom: 10px;
+      width: 200px;
+      text-align: center;
+      color: #4B2A3A;
+      background-color: #F8B9D4;
+      box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 24px;
+      font-size: 1.1rem;
+      background-color: #C0789C;
+      color: #FAF0F5;
+      margin: 10px 5px;
+      user-select: none;
+      box-shadow: 0 4px 12px rgba(192, 120, 156, 0.7);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 18px rgba(155, 85, 121, 0.9);
+    }
+
+    #enter-btn {
+      background: linear-gradient(90deg, #ff89c2, #c06993, #ff89c2);
+      background-size: 200% auto;
+      animation: glow 2s linear infinite;
+    }
+
+    @keyframes glow {
+      0% { background-position: 0% center; }
+      50% { background-position: 100% center; }
+      100% { background-position: 0% center; }
+    }
+
+    .memory-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .memory {
+      background: #F6A5C0;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      overflow: hidden;
+      width: 240px;
+      opacity: 0;
+      transform: scale(0.9);
+      transition: all 0.4s ease;
+    }
+
+    .memory.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .memory img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-bottom: 1px solid #DDAEC7;
+    }
+
+    .memory p {
+      padding: 10px;
+      font-size: 1rem;
+      color: #5E3B4C;
+      margin: 0;
+    }
+
+    .final-message {
+      font-family: 'Satisfy', cursive;
+      font-size: 1.6rem;
+      color: #F9D6E4;
+      animation: heartbeat 4s infinite;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #7E3A63;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+  </style>
+</head>
+<body>
+  <audio id="bg-music" src="yourmusic.mp3" loop muted></audio>
+
+  <div id="countdown-section" class="section active">
+    <div class="title">Countdown to 19 🎉</div>
+    <div class="countdown" id="countdown">Loading...</div>
+    <input type="password" id="password-input" placeholder="Enter Password to Skip" />
+    <button id="enter-btn">Enter</button>
+  </div>
+
+  <div id="wish-section" class="section">
+    <div class="title">🎂 Happy Birthday!</div>
+    <p>You’re officially 19 now! Let the celebration begin! 🎉</p>
+    <div><button class="back-btn">Back</button><button class="next-btn">Next</button></div>
+  </div>
+
+  <div id="transition-section" class="section">
+    <div class="title">From 18 ➝ 19</div>
+    <p>A beautiful new chapter begins...</p>
+   <p>let"s some reminisceee...</p>
+    <div><button class="back-btn">Back</button><button class="next-btn">Next</button></div>
+  </div>
+
+  <div id="memories-section" class="section">
+    <div class="title">Some Memories 💖</div>
+    <div class="memory-gallery">
+      <div class="memory"><img src="pic1.jpg" alt="Memory 1" /><p>Our first ever selfie – still my favorite.</p></div>
+      <div class="memory"><img src="pic2.jpg" alt="Memory 2" /><p>That day we laughed for hours...</p></div>
+      <div class="memory"><img src="pic3.jpg" alt="Memory 3" /><p>Forever grateful for this little moments.</p></div>
+      <div class="memory"><img src="pic4.jpg" alt="Memory 4" /><p>iconic one 😄</p></div>
+      <div class="memory"><img src="pic5.jpg" alt="Memory 5" /><p>That peaceful afternoon walk 🌿</p></div>
+      <div class="memory"><img src="pic6.jpg" alt="Memory 6" /><p>toughest eye contact ever! 🏆</p></div>
+      <div class="memory"><img src="pic7.jpg" alt="Memory 7" /><p>toughest eye contact ever(2) </p></div>
+      <div class="memory"><img src="pic8.jpg" alt="Memory 8" /><p>(3)🎈</p></div>
+      <div class="memory"><img src="pic9.jpg" alt="Memory 9" /><p>candid?!!!</p></div>
+      <div class="memory"><img src="pic10.jpg" alt="Memory 10" /><p>golden hours✨</p></div>
+<div class="memory"><img src="pic11.jpg" alt="Memory 11" /><p>ice creaaaaam✨</p></div>
+<div class="memory"><img src="pic12.jpg" alt="Memory 12" /><p>i was not that skilled</p></div>
+<div class="memory"><img src="pic13.jpg" alt="Memory 13" /><p>two hearts met by these two fingers✨</p></div>
+<div class="memory"><img src="pic14.jpg" alt="Memory 14" /><p>first eid together</p></div>
+<div class="memory"><img src="pic15.jpg" alt="Memory 15" /><p>(2)</p></div>
+
+    </div>
+    <div><button class="back-btn">Back</button><button class="next-btn">Next</button></div>
+  </div>
+<!-- Existing memories-section er pore add koro -->
+<div id="extra-memories-section" class="section">
+  <div class="title">More Memories 💫</div>
+  <p>Here are some more special moments to cherish...</p>
+  <div class="video-memory" style="margin: 20px auto; max-width: 320px;">
+    <video width="320" height="240" controls>
+      <source src="video1.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+    <p>surpriseeee</p>
+  </div>
+<div class="video-memory" style="margin: 20px auto; max-width: 320px;">
+    <video width="320" height="240" controls>
+      <source src="video2.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+    <p>best memories</p>
+  </div>
+<div class="video-memory" style="margin: 20px auto; max-width: 320px;">
+    <video width="320" height="240" controls>
+      <source src="video3.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+    <p>once upon a time</p>
+  </div>
+<div class="video-memory" style="margin: 20px auto; max-width: 320px;">
+    <video width="320" height="240" controls>
+      <source src="video4.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+    <p>all in onee</p>
+  </div>
+    <button class="back-btn">Back</button>
+    <button class="next-btn">Next</button>
+  </div>
+</div>
+<div id="yours" class="section">
+  <div class="title">More Memories 💫</div>
+  <p>let"s go back to your childhood...</p>
+  <div class="memory-gallery">
+    <div class="memory"><img src="extra1.jpg" alt="Extra Memory 1" /><p>kirre boyosh kotooo.</p></div>
+    <div class="memory"><img src="extra2.jpg" alt="Extra Memory 2" /><p>cutee.</p></div>
+    <div class="memory"><img src="extra3.jpg" alt="Extra Memory 3" /><p>prochur thanda </p></div>
+   <div class="memory"><img src="extra4.jpg" alt="Extra Memory 4" /><p>ore dhong.</p></div>
+<div class="memory"><img src="extra5.jpg" alt="Extra Memory5" /><p>biye done.</p></div>
+<div class="memory"><img src="extra6.jpg" alt="Extra Memory 6" /><p>damnn.</p></div>
+<div class="memory"><img src="extra7.jpg" alt="Extra Memory 7" /><p>koto boro hye gela.</p></div>
+<div class="memory"><img src="extra8.jpg" alt="Extra Memory 8" /><p>(2).</p></div>
+<div class="memory"><img src="extra9.jpg" alt="Extra Memory 9" /><p>🙂🙏.</p></div>
+<div class="memory"><img src="extra10.jpg" alt="Extra Memory 10" /><p>🙂🙏</p></div>
+
+  </div>
+  <div><button class="back-btn">Back</button><button class="next-btn">Next</button></div>
+</div>
+
+  <div id="arrival-section" class="section">
+    <div class="title">Welcome to 19 🌟</div>
+    <p>The journey has just begun...</p>
+    <div><button class="back-btn">Back</button><button class="next-btn">Next</button></div>
+  </div>
+
+  <div id="final-section" class="section">
+    <div class="title">One Last Thing...</div>
+    <p class="final-message"> May this year be full of love,may allah transform your teare into smiles,pain into strength and worries into happiness.We may have gone our separate ways, but the memories remain. Wishing you a beautiful birthday filled with love and meaning. Take care always!</p>
+    <div><button class="back-btn">Back</button></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    const countdownEl = document.getElementById('countdown');
+    const passwordInput = document.getElementById('password-input');
+    const enterBtn = document.getElementById('enter-btn');
+    const bgMusic = document.getElementById('bg-music');
+    let currentSectionIndex = 0;
+    const sections = document.querySelectorAll('.section');
+    const memories = document.querySelectorAll('.memory');
+
+    const targetDate = new Date(Date.UTC(2025, 4, 27, 24, 0, 0));
+
+    function updateCountdown() {
+      const nowUTC = new Date();
+      const nowBD = new Date(nowUTC.getTime() + (6 * 60 * 60 * 1000));
+      const diff = targetDate - nowBD;
+      if (diff <= 0) {
+        countdownEl.textContent = "00d 00h 00m 00s";
+        clearInterval(countdownInterval);
+        setTimeout(() => { goToSection(1); fireConfetti(); }, 1000);
+        return;
+      }
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+      countdownEl.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    const countdownInterval = setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    function fireConfetti() {
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+    }
+
+    function playMusic() {
+      if (bgMusic.paused) {
+        bgMusic.muted = false;
+        bgMusic.volume = 0.3;
+        bgMusic.play().catch(() => {});
+      }
+    }
+function goToSection(newIndex) {
+  if (newIndex < 0 || newIndex >= sections.length) return;
+  const currentSection = sections[currentSectionIndex];
+  const nextSection = sections[newIndex];
+  
+  gsap.to(currentSection, {
+    opacity: 0, duration: 0.5, onComplete: () => {
+      currentSection.classList.remove('active');
+      currentSection.style.opacity = ''; // inline style clear
+
+      nextSection.classList.add('active');
+      nextSection.style.opacity = 0; // shuru te opacity 0
+
+      gsap.to(nextSection, {
+  opacity: 1, duration: 0.5, onComplete: () => {
+    nextSection.style.opacity = ''; // fade in শেষ হলে inline style পরিষ্কার করো
+    
+    // পেজকে উপরের দিকে স্ক্রল করাও
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+});
+
+
+      currentSectionIndex = newIndex;
+
+      if (nextSection.id === 'memories-section') {
+        memories.forEach(mem => mem.classList.remove('visible'));
+        let delay = 0;
+        memories.forEach(mem => { setTimeout(() => mem.classList.add('visible'), delay); delay += 150; });
+      }
+      if (nextSection.id === 'wish-section') fireConfetti();
+      playMusic();
+    }
+  });
+}
+
+    
+    enterBtn.addEventListener('click', () => {
+      if (passwordInput.value.trim() === 'birthday19') {
+        goToSection(1); fireConfetti(); playMusic();
+      } else {
+        alert('Wrong password!');
+      }
+    });
+
+    document.querySelectorAll('.next-btn').forEach(btn => {
+      btn.addEventListener('click', () => goToSection(currentSectionIndex + 1));
+    });
+
+    document.querySelectorAll('.back-btn').forEach(btn => {
+      btn.addEventListener('click', () => goToSection(currentSectionIndex - 1));
+    });
+
+    document.body.addEventListener('click', playMusic, { once: true });
+  </script>
+</body>
+</html>
